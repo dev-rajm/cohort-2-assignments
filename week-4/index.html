@@ -7,20 +7,39 @@
     let todoState = [];
     let oldTodoState = [];
 
+    function createChild(title, description, id) {
+      const child = document.createElement("div");
+      const firstGrandParent = document.createElement("div");
+      firstGrandParent.innerHTML = title;
+      const secondGrandParent = document.createElement("div");
+      secondGrandParent.innerHTML = description;
+      const thirdGrandParent = document.createElement("button");
+      thirdGrandParent.innerHTML = "Mark as done";
+      thirdGrandParent.setAttribute("onclick", `markAsDone(${id})`);
+      child.appendChild(firstGrandParent);
+      child.appendChild(secondGrandParent);
+      child.appendChild(thirdGrandParent)
+      child.setAttribute("id", id);
+      return child;
+    }
+
     function addTodoToDom() {
       const parent = document.getElementById("todos");
       for(let i=0; i<todoState.length; i++) {
-        const child = document.createElement("div");
+        parent.appendChild(createChild(todoState[i].title, todoState[i].description, todoState[i].id));
       }
-
     }
 
     function removeTodoFromDom(todo) {
-      
+      const element = document.getElementById(todo.id);
+      element.parentElement.removeChild(element);
     }
 
     function updateTodoInDom(oldTodo, newTodo) {
-        
+      const element = document.getElementById(oldTodo.id);
+      element.children[0].innerHTML = newTodo.title;
+      element.children[1].innerHTML = newTodo.description;
+      element.children[0].innerHTML = newTodo.completed ? "Mark as done" : "Done";
     }
 
     function updateState(newTodos) {
@@ -32,32 +51,43 @@
       const newlyAddedTodos = todoState.filter(todo => !oldTodoState.includes(todo.id));
       if(newlyAddedTodos) {
         added.push(newlyAddedTodos);
-        addTodoToDom();
       }
 
-      // Calculate deleted todos
-      const deletedTodo = oldTodoState.filter(todo => !todoState.includes(todo.id));
-      if(deletedTodo) {
-        deleted.push(deletedTodo);
-        removeTodoFromDom(deletedTodo);
-        deleted = [];
+      added.filter(element => {
+        if(!oldTodoState.includes(element.id)) 
+          addTodoToDom(element);
+      });
+
+      // Calculate deleted todo
+      const deletedTodos = oldTodoState.filter(todo => !todoState.includes(todo.id));
+      if(deletedTodos) {
+        deleted.push(deletedTodos);
       }
+
+      // deleted.forEach(element => {
+      //   removeTodoFromDom(element);
+      // })
 
       // Calculate updated todos
-      let needToUpdate = "";
-      const updatedTodo = oldTodoState.filter(todo => {
-        if(todo.id === todoState[todo.id]) {
-          if(todo.title !== todoState[todo.title] || todo.description !== todoState[todo.description]) {
-            needToUpdate = todo;
-            todo.title = todoState[todo.title];
-            todo.description = todoState[todo.description];
-          }
-        }
-      })
-      if(updateState) {
-        updated.push(updatedTodo);
-        updateTodoInDom(needToUpdate, updatedTodo);
-      }
+      // let needToUpdate;
+      // const updatedTodo = oldTodoState.filter(todo => {
+      //   if(todo.id === todoState[todo.id]) {
+      //     if(todo.title !== todoState[todo.title] || todo.description !== todoState[todo.description]) {
+      //       needToUpdate = todo;
+      //       todo.title = todoState[todo.title];
+      //       todo.description = todoState[todo.description];
+      //     }
+      //   }
+      // })
+
+      // if(updatedTodos) {
+      //   updated.push(updatedTodos);
+      // }
+      
+      // updated.forEach(element => {
+      //   updateTodoInDom(needToUpdate, element);
+      // })
+      
       console.log(added);
       oldTodoState = newTodos;
     }
