@@ -60,7 +60,7 @@ router.delete('/delete/:id', userMiddleware, async (req, res) => {
   const id = req.params.id;
   await Card.findByIdAndDelete(id);
 
-  await User.deleteOne(
+  await User.findOneAndUpdate(
     { username: req.headers.username },
     {
       $pull: { createdCards: id },
