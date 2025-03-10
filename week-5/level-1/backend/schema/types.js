@@ -9,7 +9,11 @@ export const userSchema = z.object({
 export const cardSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
-  bio: z.string(),
+  bio: z.string().optional(),
   interests: z.array(z.string()).optional(),
-  links: z.array(z.string()).optional(),
+  twitter: z.string().optional(),
+  instagram: z.string().optional(),
+  facebook: z.string().optional(),
+  youtube: z.string().optional(),
+  linkedIn: z.string().optional(),
 });

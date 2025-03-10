@@ -28,11 +28,11 @@ const CardSchema = new mongoose.Schema({
       type: String,
     },
   ],
-  links: [
-    {
-      type: String,
-    },
-  ],
+  twitter: String,
+  instagram: String,
+  facebook: String,
+  youtube: String,
+  linkedIn: String,
 });
 
 export const User = mongoose.model('User', UserSchema);
