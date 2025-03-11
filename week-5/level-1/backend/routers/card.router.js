@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Card, User } from '../db/index.js';
 import { cardSchema } from '../schema/types.js';
+import { parse } from 'dotenv';
 
 const router = Router();
 
@@ -52,7 +53,42 @@ router.post('/create', async (req, res) => {
 });
 
 // Update existing card
-router.put('/update/:id', async (req, res) => {});
+router.put('/update/:id', async (req, res) => {
+  const id = req.params.id;
+  const isExist = await Card.findById(id);
+  if (!isExist) {
+    return res.status(404).json({
+      message: "Card doesn't exist.",
+    });
+  }
+  const createPayload = req.body;
+  const parsePayload = cardSchema.safeParse(createPayload);
+  if (!parsePayload.success) {
+    return res.status(411).json({
+      message: 'Unable to update card.',
+    });
+  }
+
+  await Card.findByIdAndUpdate(
+    { _id: id },
+    {
+      firstName: createPayload.firstName,
+      lastName: createPayload.lastName,
+      bio: createPayload.bio,
+      interests: createPayload.interests,
+      twitter: createPayload.twitter,
+      instagram: createPayload.instagram,
+      facebook: createPayload.facebook,
+      youtube: createPayload.youtube,
+      linkedIn: createPayload.linkedIn,
+    },
+    { new: true }
+  );
+
+  res.status(200).json({
+    message: 'Updating card successfully',
+  });
+});
 
 // Delete existing card
 router.delete('/delete/:id', async (req, res) => {
