@@ -45,7 +45,7 @@ router.post('/signin', async (req, res) => {
     });
   }
 
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username: createPayload.username });
   if (!user) {
     return res.status(411).json({
       message: "User doesn't exist. Please signin first.",
