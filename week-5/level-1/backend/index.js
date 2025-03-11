@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 import bodyParser from 'body-parser';
 import userRouter from './routers/user.router.js';
 import cardRouter from './routers/card.router.js';
+import userMiddleware from './middlewares/user.middleware.js';
 
 config();
 
@@ -13,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/user', userRouter);
-app.use('/card', cardRouter);
+app.use('/card', userMiddleware, cardRouter);
 
 app.listen(port, err => {
   if (err) throw err;

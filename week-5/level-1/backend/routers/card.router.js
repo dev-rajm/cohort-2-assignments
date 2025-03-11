@@ -1,13 +1,12 @@
 import { Router } from 'express';
 import { Card, User } from '../db/index.js';
 import { cardSchema } from '../schema/types.js';
-import userMiddleware from '../middlewares/user.middleware.js';
 
 const router = Router();
 
 // Get all cards
-router.get('/dashboard', userMiddleware, async (req, res) => {
-  const user = await User.findOne(req.headers.username);
+router.get('/dashboard', async (req, res) => {
+  const user = await User.findOne({ username: req.username });
   const cards = await Card.find({
     _id: {
       $in: user.createdCards,
@@ -20,7 +19,7 @@ router.get('/dashboard', userMiddleware, async (req, res) => {
 });
 
 // Create new card
-router.post('/create', userMiddleware, async (req, res) => {
+router.post('/create', async (req, res) => {
   const createPayload = req.body;
   const parsePayload = cardSchema.safeParse(createPayload);
 
@@ -43,7 +42,7 @@ router.post('/create', userMiddleware, async (req, res) => {
   });
 
   await User.updateOne(
-    { username: req.headers.username },
+    { username: req.username },
     { $push: { createdCards: newCard._id } }
   );
 
@@ -53,15 +52,15 @@ router.post('/create', userMiddleware, async (req, res) => {
 });
 
 // Update existing card
-router.put('/update/:id', userMiddleware, async (req, res) => {});
+router.put('/update/:id', async (req, res) => {});
 
 // Delete existing card
-router.delete('/delete/:id', userMiddleware, async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   const id = req.params.id;
   await Card.findByIdAndDelete(id);
 
   await User.findOneAndUpdate(
-    { username: req.headers.username },
+    { username: req.username },
     {
       $pull: { createdCards: id },
     },
