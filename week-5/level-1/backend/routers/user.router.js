@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { User } from '../db';
-import { userSchema } from '../schema/types';
+import { User } from '../db/index.js';
+import { userSchema } from '../schema/types.js';
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { Card, User } from '../db';
-import { cardSchema } from '../schema/types';
-import userMiddleware from '../middlewares/user.middleware';
+import { Card, User } from '../db/index.js';
+import { cardSchema } from '../schema/types.js';
+import userMiddleware from '../middlewares/user.middleware.js';
 
 const router = Router();
 

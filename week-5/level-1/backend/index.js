@@ -1,8 +1,8 @@
 import express from 'express';
 import { config } from 'dotenv';
 import bodyParser from 'body-parser';
-import userRouter from './routers/user.router';
-import cardRouter from './routers/card.router';
+import userRouter from './routers/user.router.js';
+import cardRouter from './routers/card.router.js';
 
 config();
 
