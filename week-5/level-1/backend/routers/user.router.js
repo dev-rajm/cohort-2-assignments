@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { User } from '../db/index.js';
 import { userSchema } from '../schema/types.js';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 
@@ -25,9 +26,12 @@ router.post('/signup', async (req, res) => {
     });
   }
 
+  const passwordSalt = await bcrypt.genSalt(parseInt(process.env.SALT));
+  const passwordHash = await bcrypt.hash(createPayload.password, passwordSalt);
+
   await User.create({
     username: createPayload.username,
-    password: createPayload.password,
+    password: passwordHash,
   });
 
   res.status(201).json({
@@ -52,6 +56,17 @@ router.post('/signin', async (req, res) => {
     });
   }
 
+  const verifyPassword = await bcrypt.compare(
+    createPayload.password,
+    user.password
+  );
+
+  if (!verifyPassword) {
+    return res.status(411).json({
+      message: 'Incorrect credentials.',
+    });
+  }
+
   const token = jwt.sign(
     { username: createPayload.username },
     process.env.JWT_SECRET
@@ -59,6 +74,7 @@ router.post('/signin', async (req, res) => {
 
   res.status(200).json({
     token: token,
+    message: 'User authenticated successfully.',
   });
 });
 
