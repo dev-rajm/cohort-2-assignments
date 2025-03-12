@@ -1,4 +1,5 @@
-import { Card, User } from '../db/index.js';
+import Card from '../models/card.model.js';
+import User from '../models/user.model.js';
 import { cardSchema } from '../schema/types.js';
 
 // Get all cards
@@ -48,6 +49,7 @@ export const createCard = async (req, res) => {
   });
 };
 
+// Update an existing card
 export const updateCard = async (req, res) => {
   const id = req.params.id;
   const isExist = await Card.findById(id);
@@ -85,6 +87,7 @@ export const updateCard = async (req, res) => {
   });
 };
 
+// Delete a card
 export const deleteCard = async (req, res) => {
   const id = req.params.id;
   await Card.findByIdAndDelete(id);

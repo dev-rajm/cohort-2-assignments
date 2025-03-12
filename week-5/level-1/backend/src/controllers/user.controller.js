@@ -1,4 +1,4 @@
-import { User } from '../db/index.js';
+import User from '../models/user.model.js';
 import { userSchema } from '../schema/types.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -19,7 +19,7 @@ export const signUpUser = async (req, res) => {
   const isExist = await User.findOne({ username: createPayload.username });
   if (isExist) {
     return res.status(409).json({
-      message: 'Username already exist. Please try to signin.',
+      message: 'Username already exist.',
     });
   }
 

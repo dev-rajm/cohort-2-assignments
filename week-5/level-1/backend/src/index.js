@@ -1,6 +1,7 @@
 import express from 'express';
 import { config } from 'dotenv';
 import bodyParser from 'body-parser';
+import connectDB from './lib/db.js';
 import userRouter from './routers/user.router.js';
 import cardRouter from './routers/card.router.js';
 import userMiddleware from './middlewares/user.middleware.js';
@@ -16,7 +17,7 @@ app.use(bodyParser.json());
 app.use('/user', userRouter);
 app.use('/card', userMiddleware, cardRouter);
 
-app.listen(port, err => {
-  if (err) throw err;
+app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
+  connectDB();
 });
