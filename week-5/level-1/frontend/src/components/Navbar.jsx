@@ -4,7 +4,7 @@ function Navbar() {
   return (
     <div className="navbar">
       <img src={card} alt="card logo" />
-      <h1>eCard Maker</h1>
+      <h1>eCards Showcase</h1>
     </div>
   );
 }

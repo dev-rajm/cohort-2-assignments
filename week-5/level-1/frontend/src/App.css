@@ -1,5 +1,5 @@
 .navbar {
-  height: 5rem;
+  height: 6rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,4 +14,56 @@
 .navbar > h1 {
   font-size: 2.5rem;
   font-weight: 600;
+}
+
+/* CARD GRID */
+.grid {
+  display: grid;
+  padding: 0 10px;
+  justify-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 5px;
+  grid-template-rows: auto;
+}
+
+/* CARD STYLE */
+.card {
+  width: 100%;
+  height: 250px;
+  padding: 8px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
+
+.card h1 {
+  font-size: 3rem;
+}
+
+.card p {
+  color: lightslategray;
+  font-size: 1.5rem;
+}
+
+.card h4 {
+  font-size: 2rem;
+}
+
+.card li {
+  font-size: 1.2rem;
+}
+
+.card ul {
+  list-style: none;
+}
+
+/* BUTTON STYLE */
+.btn {
+  margin-top: 25px;
+  padding: 10px;
+  border: none;
+  margin-right: 8px;
+  border-radius: 8px;
+  font-size: 1.52rem;
+  color: whitesmoke;
+  background-color: cornflowerblue;
 }
