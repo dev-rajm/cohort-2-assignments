@@ -5,6 +5,7 @@ import { CountContext } from "./context";
 1. Context API helps you to get raid of passing props down and down(prop drilling).
 2. By using Context API props can available in any component that needs that prop by teleport the prop.
 3. It lets you kept all your state logic outside of your core react components.
+Tip 1: Doesn't fixed re-rendered, only fix prop drilling
 */
 
 function App() {
