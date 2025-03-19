@@ -20,7 +20,9 @@ function App() {
   );
 }
 
+// Problem: The problem in context api is here the Count component never used the state variable `count` so the Count component shouldn't re-rendered when state variable count changes but its re-rendered when state count changes.
 function Count({ setCount }) {
+  console.log("re-rendered");
   return (
     <div>
       <CardRenderer />
