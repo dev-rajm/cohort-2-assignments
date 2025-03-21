@@ -1,0 +1,53 @@
+.profile-container {
+  width: 350px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner {
+  width: 100%;
+  height: 30%;
+  background-color: whitesmoke;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 70%;
+}
+
+.profile-flex {
+  display: flex;
+  align-items: center;
+}
+
+.profile-info {
+  text-align: center;
+}
+
+.name {
+  margin-right: 6px;
+}
+
+.age {
+  color: gray;
+  font-weight: 600;
+}
+
+.location {
+  color: gray;
+  margin: 10px 0;
+}
+
+.profile-data {
+  display: flex;
+  justify-content: space-around;
+}

@@ -1,0 +1,13 @@
+main {
+  height: 100vh;
+}
+
+button {
+  border: none;
+  margin: 0 5px;
+  border-radius: 5px;
+  padding: 3px 8px;
+}
+
+.colorPicker {
+}
