@@ -1,5 +1,8 @@
 main {
-  height: 100vh;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button {
@@ -10,4 +13,10 @@ button {
 }
 
 .colorPicker {
+  border-radius: 8px;
+  padding: 8px;
+  background-color: whitesmoke;
+  box-shadow: 8px 8px 0 #000;
+  margin-bottom: 40px;
+  align-self: flex-end;
 }

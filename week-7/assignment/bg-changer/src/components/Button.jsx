@@ -1,12 +1,12 @@
-function Button({ color, textColor = "black", setColor }) {
+import { memo } from "react";
+
+export const Button = memo(({ color, textColor, setColor }) => {
   return (
     <button
       onClick={() => setColor(color)}
-      style={{ backgroundColor: color, color: textColor }}
+      style={{ backgroundColor: color, color: textColor, cursor: "pointer" }}
     >
       {color}
     </button>
   );
-}
-
-export default Button;
+});
