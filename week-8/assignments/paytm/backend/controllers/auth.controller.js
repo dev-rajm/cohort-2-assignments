@@ -24,8 +24,8 @@ export const signup = async (req, res) => {
         message: "Invalid inputs",
       });
     }
-    const user = User.findOne({ username: createPayload.username });
-    if (user._id) {
+    const user = await User.findOne({ username: createPayload.username });
+    if (user) {
       return res.status(409).json({ message: "Username already exists" });
     }
 
@@ -47,5 +47,43 @@ export const signup = async (req, res) => {
   }
 };
 
-export const signin = async (req, res) => {};
+export const signin = async (req, res) => {
+  const createPayload = req.body;
+  try {
+    if (!createPayload.username || !createPayload.password) {
+      return res.status(411).json({ message: "All fields are required" });
+    }
+    const parsePayload = signinSchema.safeParse(createPayload);
+    if (!parsePayload.success) {
+      return res.status(411).json({
+        message: "Invalid inputs",
+      });
+    }
+
+    const user = await User.findOne({
+      username: createPayload.username,
+      password: createPayload.password,
+    });
+    if (!user) {
+      return res.status(411).json({
+        message: "User doesn't exists",
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        userId: user._id,
+      },
+      JWT_SECRET
+    );
+    res.status(200).json({
+      message: "User logged in successfully",
+      token: token,
+    });
+  } catch (error) {
+    console.log(`Error in signin controller: ${error.message}`);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const changePassword = async (req, res) => {};
