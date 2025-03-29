@@ -12,6 +12,8 @@ export const signinSchema = z.object({
   password: z.string().min(6),
 });
 
-export const changePasswordSchema = z.object({
+export const updateUserSchema = z.object({
   password: z.string().min(6),
+  firstName: z.string().max(50),
+  lastName: z.string().max(50),
 });
