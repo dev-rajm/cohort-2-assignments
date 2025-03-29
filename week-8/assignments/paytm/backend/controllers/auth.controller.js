@@ -97,37 +97,50 @@ export const signin = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const createPayload = req.body;
-  const parsePayload = updateUserSchema.safeParse(createPayload);
-  if (!parsePayload.success) {
-    return res.status(411).json({
-      message: 'Invalid inputs',
+  try {
+    const parsePayload = updateUserSchema.safeParse(createPayload);
+    if (!parsePayload.success) {
+      return res.status(411).json({
+        message: 'Invalid inputs',
+      });
+    }
+
+    await User.updateOne(
+      {
+        _id: req.userId,
+      },
+      createPayload
+    );
+
+    res.status(200).json({
+      message: 'User updated successfully',
     });
+  } catch (error) {
+    console.log(`Error in update user controller: ${error.message}`);
+    res.status(500).json({ message: 'Invalid server error' });
   }
-
-  await User.updateOne(
-    {
-      _id: req.userId,
-    },
-    createPayload
-  );
-
-  res.status(200).json({
-    message: 'User updated successfully',
-  });
 };
 
 export const filterUser = async (req, res) => {
   const filter = req.query.filter || '';
-  const users = await User.find({
-    $or: [{ firstName: { $regex: filter } }, { lastName: { $regex: filter } }],
-  });
+  try {
+    const users = await User.find({
+      $or: [
+        { firstName: { $regex: filter } },
+        { lastName: { $regex: filter } },
+      ],
+    });
 
-  res.status(200).json({
-    user: users.map(user => ({
-      username: user.username,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      _id: user._id,
-    })),
-  });
+    res.status(200).json({
+      user: users.map(user => ({
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        _id: user._id,
+      })),
+    });
+  } catch (error) {
+    console.log(`Error in filter user controller: ${error.message}`);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
