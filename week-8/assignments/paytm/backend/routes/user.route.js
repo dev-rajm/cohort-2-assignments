@@ -1,17 +1,17 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   filterUser,
   signin,
   signup,
   updateUser,
-} from "../controllers/auth.controller.js";
-import authMiddleware from "../middlewares/auth.middleware.js";
+} from '../controllers/auth.controller.js';
+import authMiddleware from '../middlewares/auth.middleware.js';
 
-const userRouter = Router();
+const router = Router();
 
-userRouter.post("/signup", signup);
-userRouter.post("/signin", signin);
-userRouter.put("/", authMiddleware, updateUser);
-userRouter.get("/bulk", filterUser);
+router.post('/signup', signup);
+router.post('/signin', signin);
+router.put('/', authMiddleware, updateUser);
+router.get('/bulk', filterUser);
 
-export default userRouter;
+export default router;
