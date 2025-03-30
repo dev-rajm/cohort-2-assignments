@@ -6,7 +6,7 @@ function Users() {
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState('');
 
-  const getBalance = async filter => {
+  const filterUser = async filter => {
     const res = await axios.get(
       `http://localhost:3000/api/v1/user/bulk?filter=${filter}`
     );
@@ -14,7 +14,7 @@ function Users() {
   };
 
   useEffect(() => {
-    getBalance(filter);
+    filterUser(filter);
   }, [filter]);
 
   return (
