@@ -6,6 +6,7 @@ import axios from 'axios';
 
 function Dashboard() {
   const [balance, setBalance] = useState(0);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     axios
@@ -14,7 +15,9 @@ function Dashboard() {
           authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
-      .then(resolve => setBalance(resolve.data.balance));
+      .then(resolve => {
+        setBalance(resolve.data.balance), setMessage(resolve.data.message);
+      });
   }, []);
 
   return (
@@ -24,6 +27,7 @@ function Dashboard() {
         <Balance value={balance} />
         <Users />
       </div>
+      {message && <div className="text-center">{message}</div>}
     </div>
   );
 }

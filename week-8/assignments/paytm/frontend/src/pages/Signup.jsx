@@ -13,6 +13,7 @@ function Signup() {
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleClick = async () => {
     const res = await axios.post('http://localhost:3000/api/v1/user/signup', {
@@ -21,6 +22,7 @@ function Signup() {
       username,
       password,
     });
+    if (res) setMessage(res.data.message);
     localStorage.setItem('token', res.data.token);
     navigate('/dashboard');
   };
@@ -61,6 +63,7 @@ function Signup() {
           />
         </div>
       </div>
+      {message && <div className="text-center">{message}</div>}
     </div>
   );
 }
