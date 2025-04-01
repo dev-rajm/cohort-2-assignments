@@ -53,3 +53,26 @@ function maxVal(arr: number[]) {
 }
 
 maxVal([1, 2, 4]);
+
+//-------------------------------------------------
+
+// Enums
+type keyInput = 'up' | 'down' | 'right' | 'left'; // Bad approach
+
+enum Direction { // Better approach
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT,
+}
+
+function doSomething(keyPressed: Direction) {
+  if (keyPressed == Direction.UP) {
+    console.log('Go Up');
+  } else if (keyPressed == Direction.DOWN) {
+    console.log('Go Down');
+  }
+}
+
+// doSomething('up');
+doSomething(Direction.UP);
