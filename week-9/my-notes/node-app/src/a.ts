@@ -76,3 +76,27 @@ function doSomething(keyPressed: Direction) {
 
 // doSomething('up');
 doSomething(Direction.UP);
+
+//----------------------------------------------------
+
+// Generics
+// type Input = number | string;
+
+// function firstEl(arr: Input[]) {
+//   return arr[0];
+// }
+
+// const value1 = firstEl([1, 2, 4]);
+// console.log(value1);
+// const value2 = firstEl(['raj', 'manna']);
+// console.log(value2.toUpperCase()); // Not worked because value2 can be a string or a number
+
+function firstEl<T>(arr: T[]) {
+  // Generic type => can be anything
+  return arr[0];
+}
+
+const value1 = firstEl<number>([1, 2, 3]); // set the generic type explicitly
+console.log(value1);
+const value2 = firstEl<string>(['raj', 'manna']); // set the generic type explicitly
+console.log(value2.toUpperCase());
