@@ -1,9 +1,11 @@
-import { Hono } from 'hono'
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import rootRoute from './routes/index.route';
 
-const app = new Hono()
+const app = new Hono();
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+app.use(cors());
 
-export default app
+app.route('/api/v1', rootRoute); // Root route
+
+export default app;
