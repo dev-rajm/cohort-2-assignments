@@ -78,7 +78,7 @@ export const createPost = async (c: Context) => {
     const body: { title: string; description: string; tags: string } =
       await c.req.json();
 
-    const tagNames = body.tags.split(',').map(tag => tag.trim());
+    const tagNames = body.tags?.split(',').map(tag => tag.trim());
 
     if (!body.title && !body.description) {
       return c.body('Invalid user input', StatusCode.BADREQUEST);
@@ -164,14 +164,10 @@ export const updatePost = async (c: Context) => {
   }).$extends(withAccelerate());
 
   try {
-    const body: { title: string; description: string; tags: string } =
-      await c.req.json();
-    const tagNames = body.tags.split(',').map(tag => tag.trim());
-
     const post = await prisma.posts.findFirst({
       where: {
         id: Number(c.req.param('id')),
-        userId: c.get('userId'),
+        userId: c.get('userId').userId,
       },
     });
 
@@ -179,8 +175,12 @@ export const updatePost = async (c: Context) => {
       return c.body('Post not found', StatusCode.NOTFOUND);
     }
 
+    const body: { title: string; description: string; tags: string } =
+      await c.req.json();
+    const tagNames = body.tags?.split(',').map(tag => tag.trim());
+
     const updatedPost = await prisma.posts.update({
-      where: { id: Number(c.req.param('id')), userId: c.get('userId') },
+      where: { id: Number(c.req.param('id')), userId: c.get('userId').userId },
       data: {
         title: body.title,
         description: body.description,
