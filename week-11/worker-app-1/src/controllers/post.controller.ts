@@ -90,7 +90,7 @@ export const createPost = async (c: Context) => {
         description: body.description,
         userId: c.get('userId')['userId'],
         tags: {
-          connectOrCreate: tagNames.map(tag => ({
+          connectOrCreate: tagNames?.map(tag => ({
             where: { tag },
             create: { tag },
           })),
