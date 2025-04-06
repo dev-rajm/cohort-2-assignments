@@ -24,7 +24,7 @@ export const getPosts = async (c: Context) => {
       },
     });
 
-    if (!posts) {
+    if (posts.length == 0) {
       return c.body('No post found. Please create one', StatusCode.Ok);
     }
 

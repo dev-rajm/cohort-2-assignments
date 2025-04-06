@@ -6,11 +6,13 @@ enum StatusCode {
   INTERNALSERVERERROR = 500,
 }
 
+type Token = string | undefined;
+
 async function authMiddleware(c: Context, next: Next) {
   try {
-    const token = c.req.header('Authorization')?.split(' ')[-1];
+    const token: Token = c.req.header('Authorization')?.split(' ')[1];
 
-    if (!token || !token.startsWith('Bearer')) {
+    if (!token) {
       return c.body('You are unauthorized user', StatusCode.FORBIDDEN);
     }
 
