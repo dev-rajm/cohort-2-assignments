@@ -53,7 +53,7 @@ export const getUserPosts = async (c: Context) => {
   try {
     const posts = await prisma.posts.findMany({
       where: {
-        userId: c.get('userId'),
+        userId: c.get('userId')['userId'],
       },
     });
 
@@ -88,7 +88,7 @@ export const createPost = async (c: Context) => {
       data: {
         title: body.title,
         description: body.description,
-        userId: c.get('userId'),
+        userId: c.get('userId')['userId'],
         tags: {
           connectOrCreate: tagNames.map(tag => ({
             where: { tag },
