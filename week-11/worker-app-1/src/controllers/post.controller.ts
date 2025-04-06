@@ -223,7 +223,7 @@ export const deletePost = async (c: Context) => {
     const post = await prisma.posts.findFirst({
       where: {
         id: Number(c.req.param('id')),
-        userId: c.get('userId'),
+        userId: c.get('userId').userId,
       },
     });
 
@@ -234,7 +234,7 @@ export const deletePost = async (c: Context) => {
     await prisma.posts.delete({
       where: {
         id: Number(c.req.param('id')),
-        userId: c.get('userId'),
+        userId: c.get('userId').userId,
       },
     });
 
