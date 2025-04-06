@@ -129,7 +129,7 @@ export const getPost = async (c: Context) => {
     const post = await prisma.posts.findFirst({
       where: {
         id: Number(c.req.param('id')),
-        userId: c.get('userId'),
+        userId: c.get('userId').userId,
       },
       include: {
         tags: true,
