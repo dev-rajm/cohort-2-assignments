@@ -3,6 +3,7 @@ import { Jwt } from 'hono/utils/jwt';
 import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { signInSchema, signUpSchema } from '../schemas/user.schema';
+import { env } from 'hono/adapter';
 
 enum StatusCode {
   BADREQUEST = 400,
