@@ -39,3 +39,14 @@ The first `index.html` file it get’s back will have context about the page sin
 ## Layouts in NextJS
 
 Layouts let you `wrap` all `child` pages inside some logic.
+
+## Loader in NextJS
+
+Added the `loading.tsx` file to define loading design.
+
+## API in NextJs
+
+Create a `api` folder inside `/app` and define your routes inside appropriate folder eg., `api/user/route.ts`.
+
+1. Use GET() function to define get routes.
+2. User POST() function to define post routes.
